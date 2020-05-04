@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="aemo-EIGENMODE",
-    version="0.0.1",
+    version="0.0.2",
     author="Eric Sheppard",
     author_email="eric@eigenmo.de",
     description="A package to parse and verify AEMO MMS data model files",
