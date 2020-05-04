@@ -5,7 +5,7 @@ import pathlib as pl
 import csv
 import io
 
-import key
+import aemo.key as key
 
 
 class Table:

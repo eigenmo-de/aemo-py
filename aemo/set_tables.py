@@ -2,7 +2,7 @@ from typing import List, Any, Callable
 from dataclasses import dataclass
 import dateutil.parser as du
 import datetime as dt
-import key
+import aemo.key as key
 
 # can throw ValueError due to date parsing
 
