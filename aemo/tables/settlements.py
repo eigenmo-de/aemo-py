@@ -244,17 +244,3 @@ class Marketfees5:
             lastchanged=du.parse(row[11], dayfirst=True),
             participantcategoryid=row[12],
         )
-
-
-def mapping(key: key.TableKey) -> Callable[[List[str]], Any]:
-    to_fn = {
-        Cpdata5.key():
-        Cpdata5.from_row,
-        FcasRecovery6.key():
-        FcasRecovery6.from_row,
-        Marketfees5.key():
-        Marketfees5.from_row,
-        NmasRecovery2.key():
-        NmasRecovery2.from_row,
-    }
-    return to_fn[key]
