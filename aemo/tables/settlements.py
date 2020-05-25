@@ -4,7 +4,8 @@ import datetime as dt
 import aemo.key as key
 
 from pydantic.dataclasses import dataclass
-from pydantic import constr, condecimal
+from pydantic import constr
+import decimal
 
 # can throw ValueError due to date parsing
 
@@ -12,7 +13,7 @@ from pydantic import constr, condecimal
 @dataclass(frozen=True)
 class DayTrack:
     settlementdate: dt.date
-    expostrunno: condecimal(max_digits=3, decimal_places=0)
+    expostrunno: decimal.Decimal
     lastchanged: dt.datetime
 
     @staticmethod
@@ -31,23 +32,23 @@ class DayTrack:
 @dataclass(frozen=True)
 class NmasRecovery2:
     settlementdate: dt.date
-    versionno: condecimal(max_digits=3, decimal_places=0)
-    periodid: condecimal(max_digits=3, decimal_places=0)
+    versionno: decimal.Decimal
+    periodid: decimal.Decimal
     participantid: constr(max_length=20)
     service: constr(max_length=10)
     contractid: constr(max_length=10)
     paymenttype: constr(max_length=20)
     regionid: constr(max_length=10)
-    rbf: condecimal(max_digits=18, decimal_places=8)
-    payment_amount: condecimal(max_digits=18, decimal_places=8)
-    participant_energy: condecimal(max_digits=18, decimal_places=8)
-    region_energy: condecimal(max_digits=18, decimal_places=8)
-    recovery_amount: condecimal(max_digits=18, decimal_places=8)
+    rbf: decimal.Decimal
+    payment_amount: decimal.Decimal
+    participant_energy: decimal.Decimal
+    region_energy: decimal.Decimal
+    recovery_amount: decimal.Decimal
     lastchanged: dt.datetime
-    participant_generation: condecimal(max_digits=18, decimal_places=8)
-    region_generation: condecimal(max_digits=18, decimal_places=8)
-    recovery_amount_customer: condecimal(max_digits=18, decimal_places=8)
-    recovery_amount_generator: condecimal(max_digits=18, decimal_places=8)
+    participant_generation: decimal.Decimal
+    region_generation: decimal.Decimal
+    recovery_amount_customer: decimal.Decimal
+    recovery_amount_generator: decimal.Decimal
 
     @staticmethod
     def key() -> key.TableKey:
@@ -84,28 +85,28 @@ class NmasRecovery2:
 @dataclass(frozen=True)
 class Cpdata5:
     settlementdate: dt.date
-    versionno: condecimal(max_digits=10, decimal_places=0)
-    periodid: condecimal(max_digits=10, decimal_places=0)
+    versionno: decimal.Decimal
+    periodid: decimal.Decimal
     participantid: constr(max_length=10)
     tcpid: constr(max_length=10)
     regionid: constr(max_length=10)
-    igenergy: condecimal(max_digits=16, decimal_places=6)
-    xgenergy: condecimal(max_digits=16, decimal_places=6)
-    inenergy: condecimal(max_digits=16, decimal_places=6)
-    xnenergy: condecimal(max_digits=16, decimal_places=6)
-    ipower: condecimal(max_digits=16, decimal_places=6)
-    xpower: condecimal(max_digits=16, decimal_places=6)
-    rrp: condecimal(max_digits=20, decimal_places=5)
-    eep: condecimal(max_digits=16, decimal_places=6)
-    tlf: condecimal(max_digits=7, decimal_places=5)
-    cprrp: condecimal(max_digits=16, decimal_places=6)
-    cpeep: condecimal(max_digits=16, decimal_places=6)
-    ta: condecimal(max_digits=16, decimal_places=6)
-    ep: condecimal(max_digits=16, decimal_places=6)
+    igenergy: decimal.Decimal
+    xgenergy: decimal.Decimal
+    inenergy: decimal.Decimal
+    xnenergy: decimal.Decimal
+    ipower: decimal.Decimal
+    xpower: decimal.Decimal
+    rrp: decimal.Decimal
+    eep: decimal.Decimal
+    tlf: decimal.Decimal
+    cprrp: decimal.Decimal
+    cpeep: decimal.Decimal
+    ta: decimal.Decimal
+    ep: decimal.Decimal
     apc: str  # field is no longer used
     resc: str  # field is no longer used
     resp: str  # field is no longer used 
-    meterrunno: condecimal(max_digits=10, decimal_places=0)
+    meterrunno: decimal.Decimal
     hostdistributor: constr(max_length=10)
     mda: constr(max_length=10)
     lastchanged: dt.datetime
@@ -158,24 +159,24 @@ class FcasRecovery6:
     versionno: constr(max_length=3)
     participantid: constr(max_length=10)
     regionid: constr(max_length=10)
-    periodid: condecimal(max_digits=3, decimal_places=0)
-    lower6sec_recovery: condecimal(max_digits=18, decimal_places=8)
-    raise6sec_recovery: condecimal(max_digits=18, decimal_places=8)
-    lower60sec_recovery: condecimal(max_digits=18, decimal_places=8)
-    raise60sec_recovery: condecimal(max_digits=18, decimal_places=8)
-    lower5min_recovery: condecimal(max_digits=18, decimal_places=8)
-    raise5min_recovery: condecimal(max_digits=18, decimal_places=8)
-    lowerreg_recovery: condecimal(max_digits=18, decimal_places=8)
-    raisereg_recovery: condecimal(max_digits=18, decimal_places=8)
+    periodid: decimal.Decimal
+    lower6sec_recovery: decimal.Decimal
+    raise6sec_recovery: decimal.Decimal
+    lower60sec_recovery: decimal.Decimal
+    raise60sec_recovery: decimal.Decimal
+    lower5min_recovery: decimal.Decimal
+    raise5min_recovery: decimal.Decimal
+    lowerreg_recovery: decimal.Decimal
+    raisereg_recovery: decimal.Decimal
     lastchanged: dt.datetime
-    lower6sec_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    raise6sec_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    lower60sec_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    raise60sec_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    lower5min_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    raise5min_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    lowerreg_recovery_gen: condecimal(max_digits=18, decimal_places=8)
-    raisereg_recovery_gen: condecimal(max_digits=18, decimal_places=8)
+    lower6sec_recovery_gen: decimal.Decimal
+    raise6sec_recovery_gen: decimal.Decimal
+    lower60sec_recovery_gen: decimal.Decimal
+    raise60sec_recovery_gen: decimal.Decimal
+    lower5min_recovery_gen: decimal.Decimal
+    raise5min_recovery_gen: decimal.Decimal
+    lowerreg_recovery_gen: decimal.Decimal
+    raisereg_recovery_gen: decimal.Decimal
 
     @staticmethod
     def key() -> key.TableKey:
@@ -216,12 +217,12 @@ class FcasRecovery6:
 @dataclass(frozen=True)
 class Marketfees5:
     settlementdate: dt.date
-    runno: condecimal(max_digits=3, decimal_places=0)
+    runno: decimal.Decimal
     participantid: constr(max_length=10)
-    periodid: condecimal(max_digits=3, decimal_places=0)
+    periodid: decimal.Decimal
     marketfeeid: constr(max_length=10)
-    marketfeevalue: condecimal(max_digits=15, decimal_places=5)
-    energy: condecimal(max_digits=16, decimal_places=6)
+    marketfeevalue: decimal.Decimal
+    energy: decimal.Decimal
     lastchanged: dt.datetime
     participantcategoryid: constr(max_length=10)
 

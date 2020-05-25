@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Iterable, TypeVar, Generic
+from typing import List, Dict, Any, Iterable
 import datetime as dt
 import dateutil.parser as du
 import pathlib as pl
@@ -12,20 +12,15 @@ from aemo.key import TableKey, TableRowsMustHaveSameKey
 import aemo.tables as tab
 
 
-T = TypeVar('T')
-
-
-# here we use generic T here to make sure that all rows in the table 
-# are of the same type
-class Table(Generic[T]):
-    _rows: List[T]  # we verify that the data added matches the key
+class Table:
+    _rows: List[Any]  # we verify that the data added matches the key
     _key: TableKey
 
-    def __init__(self, row: T):
+    def __init__(self, row: Any):
         self._key = row.key()
         self._rows = [row]
 
-    def add_row(self, row: T) -> None:
+    def add_row(self, row: Any) -> None:
         row_key = row.key()
         if row_key == self._key:
             self._rows.append(row)
@@ -36,7 +31,7 @@ class Table(Generic[T]):
         return len(self._rows)
 
     @property
-    def rows(self) -> List[T]:
+    def rows(self) -> List[Any]:
         return self._rows
 
 
@@ -68,7 +63,7 @@ class NemFile:
         return self._audience
 
     @property
-    def desired_rows(self) -> str:
+    def desired_rows(self) -> int:
         return self._desired_rows
 
     @property
