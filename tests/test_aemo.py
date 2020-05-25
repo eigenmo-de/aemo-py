@@ -3,10 +3,6 @@ import datetime as dt
 import csv
 import io
 
-# test aemo.Table
-# test add_row works as intended - eg can only
-# add rows that match the TableKey
-
 
 def ROW_CPDATA_1():
     return list(csv.reader(io.StringIO("""D,SETTLEMENTS,CPDATA,5,2025/12/31 00:00:00,1,1,TESTCPY,ABCD,TAS1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,1.1,,,,1,,MSATS,2025/12/31 02:01:00,""")))[0]
