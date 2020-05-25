@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Iterable
+from typing import List, Dict, Any, Iterable, TypeVar, Generic
 import datetime as dt
 import dateutil.parser as du
 import pathlib as pl
@@ -12,19 +12,23 @@ from aemo.key import TableKey, TableRowsMustHaveSameKey
 import aemo.tables as tab
 
 
-class Table:
-    _rows: List[Any]  # we verify that the data added matches the key
+T = TypeVar('T')
+
+
+# here we use generic T here to make sure that all rows in the table 
+# are of the same type
+class Table(Generic[T]):
+    _rows: List[T]  # we verify that the data added matches the key
     _key: TableKey
 
-    def __init__(self, row: List[str]):
-        key = TableKey.from_row(row)
-        self._key = key
-        self._rows = [tab.mapping(key)(row)]
+    def __init__(self, row: T):
+        self._key = row.key()
+        self._rows = [row]
 
-    def add_row(self, row: List[str]) -> None:
-        row_key = TableKey.from_row(row)
+    def add_row(self, row: T) -> None:
+        row_key = row.key()
         if row_key == self._key:
-            self._rows.append(tab.mapping(row_key)(row))
+            self._rows.append(row)
         else:
             raise TableRowsMustHaveSameKey()
 
@@ -32,7 +36,7 @@ class Table:
         return len(self._rows)
 
     @property
-    def rows(self) -> List[Any]:
+    def rows(self) -> List[T]:
         return self._rows
 
 
@@ -45,21 +49,27 @@ class InvalidNumberOfRows(Exception):
 
 
 class NemFile:
-    _original_name: str
     _data_source: str
     _creation_timestamp: dt.datetime
-    _file_index: int
     _audience: str
     _desired_rows: int
     _files: Dict[TableKey, Table]
 
     @property
-    def original_name(self) -> str:
-        return self._original_name
-
-    @property
     def data_source(self) -> str:
         return self._data_source
+
+    @property
+    def creation_timestamp(self) -> dt.datetime:
+        return self._creation_timestamp
+
+    @property
+    def audience(self) -> str:
+        return self._audience
+
+    @property
+    def desired_rows(self) -> str:
+        return self._desired_rows
 
     @property
     def files(self) -> Dict[TableKey, Table]:
@@ -101,12 +111,16 @@ class NemFile:
                 current_key = TableKey.from_row(row)
             elif rowtype == "D":
                 if current_key is not None:
+                    if not current_key.row_matches(row):
+                        raise TableRowsMustHaveSameKey
+
                     table = self._files.get(current_key)
+                    parsed = tab.mapping(current_key)(row)
                     if table is not None:
-                        table.add_row(row)
+                        table.add_row(parsed)
                         self._files[current_key] = table
                     else:
-                        self._files[current_key] = Table(row)
+                        self._files[current_key] = Table(parsed)
                 else:
                     raise UnexpectedRow(row)
             else:

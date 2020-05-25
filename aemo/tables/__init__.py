@@ -1,18 +1,21 @@
-from aemo.tables.settlements import *
+import aemo.tables.settlements as settlements
+from typing import Callable, Any, List
+import aemo.key as key
+
 
 # this needs to be updated as move modules are added above
 def mapping(key: key.TableKey) -> Callable[[List[str]], Any]:
     to_fn = {
 
         # start settlements
-        Cpdata5.key():
-        Cpdata5.from_row,
-        FcasRecovery6.key():
-        FcasRecovery6.from_row,
-        Marketfees5.key():
-        Marketfees5.from_row,
-        NmasRecovery2.key():
-        NmasRecovery2.from_row,
+        settlements.Cpdata5.key():
+        settlements.Cpdata5.from_row,
+        settlements.FcasRecovery6.key():
+        settlements.FcasRecovery6.from_row,
+        settlements.Marketfees5.key():
+        settlements.Marketfees5.from_row,
+        settlements.NmasRecovery2.key():
+        settlements.NmasRecovery2.from_row,
         # end settlements
 
     }
