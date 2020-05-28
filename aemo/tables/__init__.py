@@ -8,14 +8,14 @@ def mapping(key: key.TableKey) -> Callable[[List[str]], Any]:
     to_fn = {
 
         # start settlements
-        settlements.Cpdata5.key():
-        settlements.Cpdata5.from_row,
-        settlements.FcasRecovery6.key():
-        settlements.FcasRecovery6.from_row,
-        settlements.Marketfees5.key():
-        settlements.Marketfees5.from_row,
-        settlements.NmasRecovery2.key():
-        settlements.NmasRecovery2.from_row,
+        settlements.Cpdata.key():
+        settlements.Cpdata.from_row,
+        settlements.FcasRecovery.key():
+        settlements.FcasRecovery.from_row,
+        settlements.Marketfees.key():
+        settlements.Marketfees.from_row,
+        settlements.NmasRecovery.key():
+        settlements.NmasRecovery.from_row,
         # end settlements
 
     }

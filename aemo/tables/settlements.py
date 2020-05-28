@@ -30,7 +30,7 @@ class DayTrack:
 
 
 @dataclass(frozen=True)
-class NmasRecovery2:
+class NmasRecovery:
     settlementdate: dt.date
     versionno: decimal.Decimal
     periodid: decimal.Decimal
@@ -59,8 +59,8 @@ class NmasRecovery2:
         )
 
     @staticmethod
-    def from_row(row: List[str]) -> "NmasRecovery2":
-        return NmasRecovery2(
+    def from_row(row: List[str]) -> "NmasRecovery":
+        return NmasRecovery(
             settlementdate=du.parse(row[4], dayfirst=True).date(),
             versionno=row[5],
             periodid=row[6],
@@ -83,7 +83,7 @@ class NmasRecovery2:
 
 
 @dataclass(frozen=True)
-class Cpdata5:
+class Cpdata:
     settlementdate: dt.date
     versionno: decimal.Decimal
     periodid: decimal.Decimal
@@ -121,8 +121,8 @@ class Cpdata5:
         )
 
     @staticmethod
-    def from_row(row: List[str]) -> "Cpdata5":
-        return Cpdata5(
+    def from_row(row: List[str]) -> "Cpdata":
+        return Cpdata(
             settlementdate=du.parse(row[4], dayfirst=True).date(),
             versionno=row[5],
             periodid=row[6],
@@ -154,7 +154,7 @@ class Cpdata5:
 
 
 @dataclass(frozen=True)
-class FcasRecovery6:
+class FcasRecovery:
     settlementdate: dt.date
     versionno: constr(max_length=3)
     participantid: constr(max_length=10)
@@ -187,8 +187,8 @@ class FcasRecovery6:
         )
 
     @staticmethod
-    def from_row(row: List[str]) -> "FcasRecovery6":
-        return FcasRecovery6(
+    def from_row(row: List[str]) -> "FcasRecovery":
+        return FcasRecovery(
             settlementdate=du.parse(row[4], dayfirst=True).date(),
             versionno=row[5],
             participantid=row[6],
@@ -215,7 +215,7 @@ class FcasRecovery6:
 
 
 @dataclass(frozen=True)
-class Marketfees5:
+class Marketfees:
     settlementdate: dt.date
     runno: decimal.Decimal
     participantid: constr(max_length=10)
@@ -235,8 +235,8 @@ class Marketfees5:
         )
 
     @staticmethod
-    def from_row(row: List[str]) -> "Marketfees5":
-        return Marketfees5(
+    def from_row(row: List[str]) -> "Marketfees":
+        return Marketfees(
             settlementdate=du.parse(row[4], dayfirst=True).date(),
             runno=row[5],
             participantid=row[6],
