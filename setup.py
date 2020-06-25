@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="aemo-EIGENMODE",
-    version="0.0.7",
+    version="0.0.8",
     author="Eric Sheppard",
     author_email="eric@eigenmo.de",
     description="A package to parse and verify AEMO MMS data model files",
@@ -18,9 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'python-dateutil',
-        'pydantic',
-    ],
+    install_requires=[],
     python_requires='>=3.8',
 )

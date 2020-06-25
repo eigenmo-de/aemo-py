@@ -1,6 +1,5 @@
 from typing import List, Dict, Any, Iterable
 import datetime as dt
-import dateutil.parser as du
 import pathlib as pl
 import csv
 import io
@@ -87,8 +86,9 @@ class NemFile:
             if rowtype == "C":
                 if idx == 0:  # first row
                     self._data_source = row[1]
-                    self._creation_timestamp = du.parse(
-                            row[5] + " " + row[6], dayfirst=True
+                    self._creation_timestamp = dt.datetime.strptime(
+                        row[5] + " " + row[6],
+                        "%Y/%m/%d %H:%M:%S"
                     )
                     self._audience = row[4]
                     self._participant = row[3]
