@@ -26,7 +26,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest mypy
     - name: Lint with flake8
-      run: flake8 . --max-line-length=127
+      run: flake8 aemo --max-line-length=127
     - name: Test with pytest
       run: pytest -v 
     - name: Check with mypy
