@@ -6,13 +6,13 @@ from dataclasses import dataclass
 import decimal
 
 # can throw ValueError due to date parsing
+
+
 def opt_decimal(s: str) -> Optional[decimal.Decimal]:
     if s == "":
         return None
     else:
         return decimal.Decimal(s)
-
-
 
 
 @dataclass(frozen=True)
