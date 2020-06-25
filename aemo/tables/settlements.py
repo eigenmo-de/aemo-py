@@ -6,6 +6,13 @@ from dataclasses import dataclass
 import decimal
 
 # can throw ValueError due to date parsing
+def opt_decimal(s: str) -> Optional[decimal.Decimal]:
+    if s == "":
+        return None
+    else:
+        return decimal.Decimal(s)
+
+
 
 
 @dataclass(frozen=True)
@@ -67,16 +74,16 @@ class NmasRecovery:
             contractid=row[9],
             paymenttype=row[10],
             regionid=row[11],
-            rbf=decimal.Decimal(row[12]),
-            payment_amount=decimal.Decimal(row[13]),
-            participant_energy=decimal.Decimal(row[14]),
-            region_energy=decimal.Decimal(row[15]),
-            recovery_amount=decimal.Decimal(row[16]),
+            rbf=opt_decimal(row[12]),
+            payment_amount=opt_decimal(row[13]),
+            participant_energy=opt_decimal(row[14]),
+            region_energy=opt_decimal(row[15]),
+            recovery_amount=opt_decimal(row[16]),
             lastchanged=dt.datetime.strptime(row[17], "%Y/%m/%d %H:%M:%S"),
-            participant_generation=decimal.Decimal(row[18]),
-            region_generation=decimal.Decimal(row[19]),
-            recovery_amount_customer=decimal.Decimal(row[20]),
-            recovery_amount_generator=decimal.Decimal(row[21]),
+            participant_generation=opt_decimal(row[18]),
+            region_generation=opt_decimal(row[19]),
+            recovery_amount_customer=opt_decimal(row[20]),
+            recovery_amount_generator=opt_decimal(row[21]),
         )
 
 
@@ -101,9 +108,9 @@ class Cpdata:
     cpeep: Optional[decimal.Decimal]
     ta: Optional[decimal.Decimal]
     ep: Optional[decimal.Decimal]
-    apc: Optional[str]  # field is no longer used
-    resc: Optional[str]  # field is no longer used
-    resp: Optional[str]  # field is no longer used
+    apc: Optional[decimal.Decimal]
+    resc: Optional[decimal.Decimal]
+    resp: Optional[decimal.Decimal]
     meterrunno: Optional[decimal.Decimal]
     hostdistributor: Optional[str]
     mda: str
@@ -127,23 +134,23 @@ class Cpdata:
             participantid=row[7],
             tcpid=row[8],
             regionid=row[9],
-            igenergy=decimal.Decimal(row[10]),
-            xgenergy=decimal.Decimal(row[11]),
-            inenergy=decimal.Decimal(row[12]),
-            xnenergy=decimal.Decimal(row[13]),
-            ipower=decimal.Decimal(row[14]),
-            xpower=decimal.Decimal(row[15]),
-            rrp=decimal.Decimal(row[16]),
-            eep=decimal.Decimal(row[17]),
-            tlf=decimal.Decimal(row[18]),
-            cprrp=decimal.Decimal(row[19]),
-            cpeep=decimal.Decimal(row[20]),
-            ta=decimal.Decimal(row[21]),
-            ep=decimal.Decimal(row[22]),
-            apc=row[23],
-            resc=row[24],
-            resp=row[25],
-            meterrunno=decimal.Decimal(row[26]),
+            igenergy=opt_decimal(row[10]),
+            xgenergy=opt_decimal(row[11]),
+            inenergy=opt_decimal(row[12]),
+            xnenergy=opt_decimal(row[13]),
+            ipower=opt_decimal(row[14]),
+            xpower=opt_decimal(row[15]),
+            rrp=opt_decimal(row[16]),
+            eep=opt_decimal(row[17]),
+            tlf=opt_decimal(row[18]),
+            cprrp=opt_decimal(row[19]),
+            cpeep=opt_decimal(row[20]),
+            ta=opt_decimal(row[21]),
+            ep=opt_decimal(row[22]),
+            apc=opt_decimal(row[23]),
+            resc=opt_decimal(row[24]),
+            resp=opt_decimal(row[25]),
+            meterrunno=opt_decimal(row[26]),
             hostdistributor=row[27],
             mda=row[28],
             lastchanged=dt.datetime.strptime(row[29], "%Y/%m/%d %H:%M:%S"),
@@ -192,23 +199,23 @@ class FcasRecovery:
             participantid=row[6],
             regionid=row[7],
             periodid=decimal.Decimal(row[8]),
-            lower6sec_recovery=decimal.Decimal(row[9]),
-            raise6sec_recovery=decimal.Decimal(row[10]),
-            lower60sec_recovery=decimal.Decimal(row[11]),
-            raise60sec_recovery=decimal.Decimal(row[12]),
-            lower5min_recovery=decimal.Decimal(row[13]),
-            raise5min_recovery=decimal.Decimal(row[14]),
-            lowerreg_recovery=decimal.Decimal(row[15]),
-            raisereg_recovery=decimal.Decimal(row[16]),
+            lower6sec_recovery=opt_decimal(row[9]),
+            raise6sec_recovery=opt_decimal(row[10]),
+            lower60sec_recovery=opt_decimal(row[11]),
+            raise60sec_recovery=opt_decimal(row[12]),
+            lower5min_recovery=opt_decimal(row[13]),
+            raise5min_recovery=opt_decimal(row[14]),
+            lowerreg_recovery=opt_decimal(row[15]),
+            raisereg_recovery=opt_decimal(row[16]),
             lastchanged=dt.datetime.strptime(row[17], "%Y/%m/%d %H:%M:%S"),
-            lower6sec_recovery_gen=decimal.Decimal(row[18]),
-            raise6sec_recovery_gen=decimal.Decimal(row[19]),
-            lower60sec_recovery_gen=decimal.Decimal(row[20]),
-            raise60sec_recovery_gen=decimal.Decimal(row[21]),
-            lower5min_recovery_gen=decimal.Decimal(row[22]),
-            raise5min_recovery_gen=decimal.Decimal(row[23]),
-            lowerreg_recovery_gen=decimal.Decimal(row[24]),
-            raisereg_recovery_gen=decimal.Decimal(row[25]),
+            lower6sec_recovery_gen=opt_decimal(row[18]),
+            raise6sec_recovery_gen=opt_decimal(row[19]),
+            lower60sec_recovery_gen=opt_decimal(row[20]),
+            raise60sec_recovery_gen=opt_decimal(row[21]),
+            lower5min_recovery_gen=opt_decimal(row[22]),
+            raise5min_recovery_gen=opt_decimal(row[23]),
+            lowerreg_recovery_gen=opt_decimal(row[24]),
+            raisereg_recovery_gen=opt_decimal(row[25]),
         )
 
 
@@ -240,8 +247,8 @@ class Marketfees:
             participantid=row[6],
             periodid=decimal.Decimal(row[7]),
             marketfeeid=row[8],
-            marketfeevalue=decimal.Decimal(row[9]),
-            energy=decimal.Decimal(row[10]),
+            marketfeevalue=opt_decimal(row[9]),
+            energy=opt_decimal(row[10]),
             lastchanged=dt.datetime.strptime(row[11], "%Y/%m/%d %H:%M:%S"),
             participantcategoryid=row[12],
         )
