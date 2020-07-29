@@ -252,3 +252,38 @@ class Marketfees:
             lastchanged=dt.datetime.strptime(row[11], "%Y/%m/%d %H:%M:%S"),
             participantcategoryid=row[12],
         )
+
+
+@dataclass(frozen=True)
+class Reallocations:
+    settlementdate: dt.date
+    runno: decimal.Decimal
+    periodid: decimal.Decimal
+    participantid: str
+    reallocationid: str
+    reallocationvalue: Optional[decimal.Decimal]
+    energy: Optional[decimal.Decimal]
+    rrp: Optional[decimal.Decimal]
+    lastchanged: Optional[dt.datetime]
+
+    @staticmethod
+    def key() -> key.TableKey:
+        return key.TableKey(
+            collection="SETTLEMENTS",
+            name="REALLOCATIONS",
+            version=5
+        )
+
+    @staticmethod
+    def from_row(row: List[str]) -> "Reallocations":
+        return Reallocations(
+            settlementdate=dt.datetime.strptime(row[4], "%Y/%m/%d %H:%M:%S").date(),
+            runno=decimal.Decimal(row[5]),
+            periodid=decimal.Decimal(row[6]),
+            participantid=row[7],
+            reallocationid=row[8],
+            reallocationvalue=opt_decimal(row[9]),
+            energy=opt_decimal(row[10]),
+            rrp=opt_decimal(row[11]),
+            lastchanged=dt.datetime.strptime(row[12], "%Y/%m/%d %H:%M:%S"),
+        )
