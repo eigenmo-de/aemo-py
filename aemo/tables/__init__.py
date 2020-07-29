@@ -7,6 +7,7 @@ import aemo.key as key
 def mapping(key: key.TableKey) -> Callable[[List[str]], Any]:
     to_fn = {
         # start settlements
+        settlements.DayTrack.key(): settlements.DayTrack.from_row,
         settlements.Cpdata.key(): settlements.Cpdata.from_row,
         settlements.FcasRecovery.key(): settlements.FcasRecovery.from_row,
         settlements.Marketfees.key(): settlements.Marketfees.from_row,
