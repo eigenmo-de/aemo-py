@@ -23,7 +23,11 @@ class DayTrack:
 
     @staticmethod
     def key() -> key.TableKey:
-        raise Exception("TODO")
+        return key.TableKey(
+            collection="SETTLEMENTS",
+            name="DAYTRACK",
+            version=5
+        )
 
     @staticmethod
     def from_row(row: List[str]) -> "DayTrack":
