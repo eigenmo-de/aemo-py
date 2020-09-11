@@ -48,7 +48,7 @@ class NemFile:
     _audience: str
     _desired_rows: int
     _files: Dict[TableKey, Table]
-    _unsupported_files: Set[TableKey]
+    _unsupported_files: Dict[TableKey, int]
 
     @property
     def data_source(self) -> str:
