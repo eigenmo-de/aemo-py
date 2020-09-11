@@ -124,8 +124,6 @@ class NemFile:
                 raise UnexpectedRow(row)
         num_files = len(self._files)
         num_unsupported_files = len(self._unsupported_files)
-        print(self._files.keys())
-        print(self._unsupported_files.keys())
         total_file_rows = sum([len(v) for v in self._files.values()])
         total_unsupported_rows = sum([v for v in self._unsupported_files.values()])
         got_rows = total_file_rows + num_files + 2 + total_unsupported_rows + num_unsupported_files
