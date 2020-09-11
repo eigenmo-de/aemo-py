@@ -1,4 +1,4 @@
-from typing import List, Dict, Any, Iterable
+from typing import List, Dict, Any, Iterable, Set
 import datetime as dt
 import pathlib as pl
 import csv
@@ -48,6 +48,7 @@ class NemFile:
     _audience: str
     _desired_rows: int
     _files: Dict[TableKey, Table]
+    _unsupported_files: Set[TableKey]
 
     @property
     def data_source(self) -> str:
@@ -81,6 +82,7 @@ class NemFile:
     def __init__(self, csv_reader: Iterable[List[str]]) -> None:
         current_key = None
         self._files = dict()
+        self._unsupported_files = dict()
         for idx, row in enumerate(csv_reader):
             rowtype = row[0]
             if rowtype == "C":
@@ -95,11 +97,6 @@ class NemFile:
 
                 elif row[1] == "END OF REPORT":
                     self._desired_rows = int(row[2])
-                    if (idx + 1) != self._desired_rows:
-                        raise InvalidNumberOfRows(
-                            "got {got} but expected {exp}"
-                            .format(got=idx+1, exp=self._desired_rows)
-                        )
                 else:
                     raise UnexpectedRow(row)
             elif rowtype == "I":
@@ -109,20 +106,29 @@ class NemFile:
                     if not current_key.row_matches(row):
                         raise TableRowsMustHaveSameKey
 
-                    table = self._files.get(current_key)
-                    parsed = tab.mapping(current_key)(row)
-                    if table is not None:
-                        table.add_row(parsed)
-                        self._files[current_key] = table
-                    else:
-                        self._files[current_key] = Table(parsed)
+                    try:
+                        table = self._files.get(current_key)
+                        parsed = tab.mapping(current_key)(row)
+                        if table is not None:
+                            table.add_row(parsed)
+                            self._files[current_key] = table
+                        else:
+                            self._files[current_key] = Table(parsed)
+                    except KeyError:
+                        # table not supported
+                        # keep a set of all those unsupported
+                        self._unsupported_files[current_key] = self._unsupported_files.get(current_key, 0) + 1
                 else:
                     raise UnexpectedRow(row)
             else:
                 raise UnexpectedRow(row)
         num_files = len(self._files)
+        num_unsupported_files = len(self._unsupported_files)
+        print(self._files.keys())
+        print(self._unsupported_files.keys())
         total_file_rows = sum([len(v) for v in self._files.values()])
-        got_rows = total_file_rows + num_files + 2
+        total_unsupported_rows = sum([v for v in self._unsupported_files.values()])
+        got_rows = total_file_rows + num_files + 2 + total_unsupported_rows + num_unsupported_files
         if got_rows != self._desired_rows:
             raise InvalidNumberOfRows(
                 "got {got} but expected {exp}"
