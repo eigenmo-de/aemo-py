@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 
 
 @dataclass(
@@ -24,6 +24,9 @@ class TableKey:
             name=self.name,
             ver=self.version
         )
+
+    def unversioned(self) -> Tuple[str, str]:
+        return (self.collection, self.name)
 
 
 class TableRowsMustHaveSameKey(Exception):
